@@ -8,38 +8,26 @@ export type Todo = {
   completed: boolean
 }
 
-type GroupedTodo = {
-  [key: number]: Todo[]
-}
-
 const handleConvertIdToName = (id: number) => {
   switch (id) {
     case 1:
-     return 'Dashawn' 
+      return 'Dashawn'
     case 2:
-     return 'Holden' 
+      return 'Holden'
     case 3:
-     return 'Lillian' 
+      return 'Lillian'
     case 4:
-     return 'Ari' 
+      return 'Ari'
     case 5:
-     return 'James' 
+      return 'James'
     case 6:
-     return 'Miley' 
+      return 'Miley'
     case 7:
-     return 'Jimena' 
+      return 'Jimena'
 
     default:
       return 'Unknown'
   }
-}
-const groupByUsers = (objectArray: Todo[]) => {
-  return objectArray.reduce((acc: GroupedTodo, todo) => {
-    const key = todo.userId
-    const curGroup = acc[key] ?? []
-    
-    return { ...acc, [key]: [...curGroup, todo] }
-  }, {})
 }
 
 function App() {
@@ -54,25 +42,28 @@ function App() {
     fetchTodos()
   }, [])
 
-  const grouped = groupByUsers(todos)
-  
   return (
     <div>
-      <h2>Todos:</h2>
-      <ul className='todos'>
-        {
-          Object.values(grouped).map(todos => {
-            return todos.map(todo => (
-              <li className='todo'>
-                <h3 className='title'>{todo.title}</h3>
-                <div className='details'>
-                  <p>Task by: <span className='primary-gradient'>{handleConvertIdToName(todo.userId)}</span></p>
-                 {todo.completed ? <span className="pill completed">Completed</span> : <span className="pill incomplete">Incomplete</span>}
-                </div>
-              </li>
-            ))
-          })
-        }
+      <h1 className="todos-title primary-gradient">Todos</h1>
+      <ul className="todos">
+        {todos.map((todo) => (
+          <li className="todo" key={todo.id}>
+            <h3 className="title">{todo.title}</h3>
+            <div className="details">
+              <p>
+                Task by:{' '}
+                <span className="primary-gradient">
+                  {handleConvertIdToName(todo.userId)}
+                </span>
+              </p>
+              {todo.completed ? (
+                <span className="pill completed">Completed</span>
+              ) : (
+                <span className="pill incomplete">Incomplete</span>
+              )}
+            </div>
+          </li>
+        ))}
       </ul>
     </div>
   )
